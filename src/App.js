@@ -8,9 +8,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid item xs={10}>
           <SearchBar />
+          <JobCard />
+          <JobCard />
           <JobCard />
         </Grid>
       </Grid>
