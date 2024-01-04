@@ -4,6 +4,8 @@ import Header from "./Components/Header";
 import SearchBar from "./Components/SearchBar";
 import JobCard from "./Components/Job/JobCard";
 import NewJobModel from "./Components/Job/NewJobModel";
+import "../src/dummyData";
+import dummyData from "../src/dummyData";
 
 function App() {
   return (
@@ -13,9 +15,12 @@ function App() {
       <Grid container justifyContent="center">
         <Grid item xs={10}>
           <SearchBar />
-          <JobCard />
-          <JobCard />
-          <JobCard />
+          {dummyData.map((data) => {
+            return <JobCard key={data.id} {...data} />;
+          })}
+
+          {/* <JobCard />
+          <JobCard /> */}
         </Grid>
       </Grid>
     </ThemeProvider>
