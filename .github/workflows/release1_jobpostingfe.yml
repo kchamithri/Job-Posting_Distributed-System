@@ -14,16 +14,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
 
       - name: npm install, build, and test
         run: |
-          npm install -f
+          npm install
           npm run build --if-present
           npm run test --if-present
       
@@ -53,4 +53,4 @@ jobs:
           app-name: 'JobPostingFE'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9112414216F2411A851399D43851E77A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_707A3FF4ED2B46FDB4F078F6D0C14E25 }}
