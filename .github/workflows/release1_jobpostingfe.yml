@@ -23,12 +23,9 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install
+          npm install -f
           npm run build --if-present
           npm run test --if-present
-          
-      - name: Install Material UI
-        run: npm install @material-ui/core@^4.12.4
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
