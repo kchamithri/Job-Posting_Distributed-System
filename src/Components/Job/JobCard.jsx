@@ -33,7 +33,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
+const JobCard = (props) => {
   const classes = useStyle();
   return (
     <Box p={2} className={classes.wrapper}>
@@ -68,3 +68,5 @@ export default (props) => {
     </Box>
   );
 };
+
+export default JobCard;

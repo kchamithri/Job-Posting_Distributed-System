@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 
-export default () => {
+const Header = () => {
   return (
     <Box p={10} bgcolor="secondary.main" color="white">
       <Grid container>
@@ -20,3 +20,5 @@ export default () => {
     </Box>
   );
 };
+
+export default Header;

@@ -15,7 +15,7 @@ const useStyle = makeStyles({
   },
 });
 
-export default (props) => {
+const SearchBar = (props) => {
   const classes = useStyle();
   return (
     <Box p={2} mt={-5} mb={2} className={classes.wrapper}>
@@ -36,3 +36,5 @@ export default (props) => {
     </Box>
   );
 };
+
+export default SearchBar;
