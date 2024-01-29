@@ -19,13 +19,14 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
+          node-version: '18.x'
 
       - name: npm install, build, and test
         run: |
-          npm install -f
+          npm install
           npm run build --if-present
-
+          npm run test --if-present
+      
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -36,20 +37,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: "Production"
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: node-app
-
-      - name: "Deploy to Azure Web App"
+      
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: "JobPostingFE"
-          slot-name: "Production"
+          app-name: 'JobPostingFE'
+          slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_707A3FF4ED2B46FDB4F078F6D0C14E25 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_35C01EC9B8F7470A828146336F295E7E }}
