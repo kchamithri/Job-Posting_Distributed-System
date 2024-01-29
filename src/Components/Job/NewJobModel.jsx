@@ -33,7 +33,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
+const NewJobModel = (props) => {
   const classes = useStyle();
   const skills = [
     "Javascript",
@@ -139,3 +139,5 @@ export default (props) => {
     </Dialog>
   );
 };
+
+export default NewJobModel;
