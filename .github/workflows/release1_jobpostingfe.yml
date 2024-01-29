@@ -23,8 +23,8 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-      	  path: ~/.npm
-          key: <span class="math-inline">\{\{ runner\.OS \}\}\-node\-</span>{{ hashFiles('/package-lock.json') }}
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('/package-lock.json') }}
           restore-keys: |${{ runner.OS }}-node-
 
       - name: npm install, build, and test
