@@ -47,6 +47,11 @@ jobs:
         npm install -f
         npm run build --if-present
 
+    - name: Compress application files
+      run: |
+        mkdir compressed
+        tar -czf compressed/release.tar.gz
+          
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
