@@ -19,7 +19,7 @@
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "kchamithri-patch-1" ]
   workflow_dispatch:
 
 env:
