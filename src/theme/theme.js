@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material";
 
 const primary = "#18E1D9";
-const secondary = "#0B0B15";
+const secondary = "#000000";
 
 const theme = createTheme({
   typography: {
