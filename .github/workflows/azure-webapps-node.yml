@@ -50,7 +50,7 @@ jobs:
     - name: Compress application files
       run: |
         mkdir compressed
-        tar -czf compressed/release.tar.gz .
+        tar -czf compressed/release.tar.gz -C . .
           
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
