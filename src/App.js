@@ -33,7 +33,7 @@ function App() {
       .catch((error) => {
         console.log("error fetching:", error);
       });
-  }, []);
+  }, [JOBS_API_URL]);
 
   return (
     <ThemeProvider theme={theme}>
