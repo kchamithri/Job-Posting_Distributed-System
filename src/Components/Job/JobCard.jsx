@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Grid, Typography, Button, makeStyles } from "@material-ui/core";
-import { differenceInMinutes } from "date-fns";
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
@@ -54,8 +53,7 @@ const JobCard = (props) => {
         <Grid item container direction="column" alignItems="flex-end" xs>
           <Grid item>
             <Typography variant="caption">
-              {differenceInMinutes(Date.now(), props.postedOn)} min ago |{" "}
-              {props.type} | {props.location}
+              {props.postedOn.split("T")[0]} | {props.type} | {props.location}
             </Typography>
           </Grid>
           <Grid item>

@@ -5,26 +5,34 @@ import Header from "./Components/Header";
 import SearchBar from "./Components/SearchBar";
 import JobCard from "./Components/Job/JobCard";
 import NewJobModel from "./Components/Job/NewJobModel";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../src/firebase/config";
 import { Box, CircularProgress } from "@material-ui/core";
 function App() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchJobs = async () => {
-    const req = await getDocs(collection(db, "jobs"));
-    const tempJobs = req.docs.map((job) => ({
-      ...job.data(),
-      id: job.id,
-      postedOn: job.data().postedOn.toDate(),
-    }));
-    setJobs(tempJobs);
-    setLoading(false);
-  };
+  const BASE_URL = "https://jobsforyou.azurewebsites.net";
+
+  // const JOBS_API_URL = BASE_URL + "/jobs";
+  const JOBS_API_URL = BASE_URL;
 
   useEffect(() => {
-    fetchJobs();
+    fetch(JOBS_API_URL, {
+      method: "GET",
+      content: "application/json",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setJobs(data.jobs);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("error fetching:", error);
+      });
   }, []);
 
   return (
