@@ -133,7 +133,7 @@ const NewJobModel = (props) => {
       // Trigger the job posting when isPostingJob is true
       postJob();
     }
-  }, [isPostingJob, JOBS_API_URL]); // Dependency array: watch for changes in isPostingJob or jobDetails
+  }, [isPostingJob, JOBS_API_URL, jobDetails ]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
   return (
     <Dialog open={true} fullWidth>
