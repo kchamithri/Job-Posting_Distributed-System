@@ -12,7 +12,7 @@ function App() {
 
   const BASE_URL = "https://jobsforyou.azurewebsites.net";
 
-  // const JOBS_API_URL = BASE_URL + "/jobs";
+  //const JOBS_API_URL = BASE_URL + "/jobs";
   const JOBS_API_URL = BASE_URL;
 
   useEffect(() => {

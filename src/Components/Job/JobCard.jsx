@@ -53,7 +53,7 @@ const JobCard = (props) => {
         <Grid item container direction="column" alignItems="flex-end" xs>
           <Grid item>
             <Typography variant="caption">
-              {props.postedOn.split("T")[0]} | {props.type} | {props.location}
+              {props.postedOn} | {props.type} | {props.location}
             </Typography>
           </Grid>
           <Grid item>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Dialog,
@@ -79,6 +79,62 @@ const NewJobModel = (props) => {
     'SQL',
   ];
   console.log(jobDetails);
+
+  const BASE_URL = 'https://jobsforyou.azurewebsites.net';
+   const JOBS_API_URL = BASE_URL + '/addJob';
+
+  // const handlePostJob = async () => {
+  //   try {
+  //     const response = await fetch(JOBS_API_URL, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(jobDetails),
+  //     });
+
+  //     if (response.ok) {
+  //       console.log('Job posted successfully');
+  //     } else {
+  //       console.error('Failed to post job');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error posting job:', error);
+  //   }
+  // };
+
+  const [isPostingJob, setIsPostingJob] = useState(false);
+
+  useEffect(() => {
+    const postJob = async () => {
+      try {
+        const response = await fetch(JOBS_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jobDetails),
+        });
+
+        if (response.ok) {
+          console.log('Job posted successfully');
+        } else {
+          console.error('Failed to post job');
+        }
+      } catch (error) {
+        console.error('Error posting job:', error);
+      } finally {
+        // Reset the state variable to indicate that the job posting is complete
+        setIsPostingJob(false);
+      }
+    };
+
+    if (isPostingJob) {
+      // Trigger the job posting when isPostingJob is true
+      postJob();
+    }
+  }, [isPostingJob, jobDetails]); // Dependency array: watch for changes in isPostingJob or jobDetails
+
   return (
     <Dialog open={true} fullWidth>
       <DialogTitle>
@@ -204,7 +260,13 @@ const NewJobModel = (props) => {
           alignItems="center"
         >
           <Typography variant="caption">*Required Fields</Typography>
-          <Button variant="contained" disableElevation color="primary">
+          <Button
+            variant="contained"
+            disableElevation
+            color="primary"
+            // onClick={handlePostJob}
+            onClick={() => setIsPostingJob(true)}
+          >
             Post Job
           </Button>
         </Box>
