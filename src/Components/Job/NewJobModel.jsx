@@ -62,7 +62,7 @@ const NewJobModel = (props) => {
     jobDetails.skills.includes(skill)
       ? setJobDetails((oldState) => ({
           ...oldState,
-          skills: oldState.skills.filter((s) => s != skill),
+          skills: oldState.skills.filter((s) => s !== skill),
         }))
       : setJobDetails((oldState) => ({
           ...oldState,
