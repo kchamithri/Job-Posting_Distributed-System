@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Dialog,
@@ -116,6 +116,10 @@ const NewJobModel = (props) => {
     props.closeModal();
   }
 
+  const closeModalCallback = useCallback(() => {
+    closeModal();
+  }, [closeModal]);
+
   useEffect(() => {
     const postJob = async () => {
       try {
@@ -136,7 +140,8 @@ const NewJobModel = (props) => {
       } catch (error) {
         console.error('Error posting job:', error);
       } finally {
-        closeModal();
+        // closeModal();
+        closeModalCallback();
         // Reset the state variable to indicate that the job posting is complete
         setIsPostingJob(false);
         // props.onNewJobPosted();
@@ -147,7 +152,7 @@ const NewJobModel = (props) => {
       // Trigger the job posting when isPostingJob is true
       postJob();
     }
-  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModal ]); // Dependency array: watch for changes in isPostingJob or jobDetails
+  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModalCallback]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
  
 
