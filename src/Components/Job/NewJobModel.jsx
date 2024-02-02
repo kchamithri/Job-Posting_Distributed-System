@@ -110,15 +110,21 @@ const NewJobModel = (props) => {
 
   const [isPostingJob, setIsPostingJob] = useState(false);
 
-  const closeModal = () =>{
+  // const closeModal = () =>{
+  //   setJobDetails(initState);
+  //   setLoading(false);
+  //   props.closeModal();
+  // }
+
+  // const closeModalCallback = useCallback(() => {
+  //   closeModal();
+  // }, [closeModal]);
+
+  const closeModal = useCallback(() => {
     setJobDetails(initState);
     setLoading(false);
     props.closeModal();
-  }
-
-  const closeModalCallback = useCallback(() => {
-    closeModal();
-  }, [closeModal]);
+  }, [props.closeModal]);
 
   useEffect(() => {
     const postJob = async () => {
@@ -140,8 +146,8 @@ const NewJobModel = (props) => {
       } catch (error) {
         console.error('Error posting job:', error);
       } finally {
-        // closeModal();
-        closeModalCallback();
+        closeModal();
+        // closeModalCallback();
         // Reset the state variable to indicate that the job posting is complete
         setIsPostingJob(false);
         // props.onNewJobPosted();
@@ -152,7 +158,7 @@ const NewJobModel = (props) => {
       // Trigger the job posting when isPostingJob is true
       postJob();
     }
-  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModalCallback]); // Dependency array: watch for changes in isPostingJob or jobDetails
+  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModal]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
  
 
