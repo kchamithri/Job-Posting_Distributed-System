@@ -15,6 +15,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import CloseIcon from '@mui/icons-material/Close';
+import { CircularProgress } from '@mui/material';
 
 const useStyle = makeStyles((theme) => ({
   skillChip: {
@@ -37,18 +38,22 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
+const initState = { 
+companyName: '',
+companyUrl: '',
+link: '',
+location: '',
+// postedOn: "",
+skills: [],
+title: '',
+type: '',
+description: '',}
+
 const NewJobModel = (props) => {
-  const [jobDetails, setJobDetails] = useState({
-    companyName: '',
-    companyUrl: '',
-    link: '',
-    location: '',
-    // postedOn: "",
-    skills: [],
-    title: '',
-    type: '',
-    description: '',
-  });
+  const [loading, setLoading] = useState(false);
+  const [newJobModal, setNewJobModal] = useState(false);
+
+  const [jobDetails, setJobDetails] = useState(initState);
 
   const handleChange = (e) => {
     e.persist();
@@ -108,6 +113,7 @@ const NewJobModel = (props) => {
   useEffect(() => {
     const postJob = async () => {
       try {
+        setLoading(true);
         const response = await fetch(JOBS_API_URL, {
           method: 'POST',
           headers: {
@@ -124,8 +130,10 @@ const NewJobModel = (props) => {
       } catch (error) {
         console.error('Error posting job:', error);
       } finally {
+        closeModal();
         // Reset the state variable to indicate that the job posting is complete
         setIsPostingJob(false);
+        props.onNewJobPosted();
       }
     };
 
@@ -135,12 +143,18 @@ const NewJobModel = (props) => {
     }
   }, [isPostingJob, JOBS_API_URL, jobDetails ]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
+  const closeModal = () =>{
+    setJobDetails(initState);
+    setLoading(false);
+    props.closeModal();
+  }
+
   return (
-    <Dialog open={true} fullWidth>
+    <Dialog open={props.newJobModal} fullWidth>
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           Post Job
-          <IconButton>
+          <IconButton onClick={closeModal}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -266,8 +280,14 @@ const NewJobModel = (props) => {
             color="primary"
             // onClick={handlePostJob}
             onClick={() => setIsPostingJob(true)}
+            disabled={loading}
           >
-            Post Job
+            {loading ? (
+              <CircularProgress color='secondary' size={22} />
+            ):(
+              "Post Job"
+              )}
+            
           </Button>
         </Box>
       </DialogActions>

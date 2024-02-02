@@ -10,6 +10,8 @@ function App() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [newJobModal, setNewJobModal] = useState(false);
+
   const BASE_URL = "https://jobsforyou.azurewebsites.net";
 
   //const JOBS_API_URL = BASE_URL + "/jobs";
@@ -35,10 +37,30 @@ function App() {
       });
   }, [JOBS_API_URL]);
 
+
+  const handleNewJobPosted = () => {
+    // Close the modal and trigger a refresh of job data
+    setNewJobModal(false);
+    // You can also set loading to true here if you want to show a loading spinner during data refresh
+    // setLoading(true);
+    // Fetch updated job data after posting a new job
+    fetch(JOBS_API_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        setJobs(data.jobs);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("error fetching:", error);
+        // Handle error if needed
+        setLoading(false);
+      });
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <Header />
-      <NewJobModel />
+      <Header openNewJobModal={() => setNewJobModal(true)} />
+      <NewJobModel closeModal={() => setNewJobModal(false)} newJobModal={newJobModal} onNewJobPosted={handleNewJobPosted}/>
       <Grid container justifyContent="center">
         <Grid item xs={10}>
           <SearchBar />
