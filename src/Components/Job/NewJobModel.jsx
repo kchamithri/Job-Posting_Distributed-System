@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Dialog,
@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { CircularProgress } from '@mui/material';
+import { useCallback } from 'react';
 
 const useStyle = makeStyles((theme) => ({
   skillChip: {
@@ -51,7 +52,7 @@ description: '',}
 
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
-  const [newJobModal, setNewJobModal] = useState(false);
+  // const [newJobModal, setNewJobModal] = useState(false);
 
   const [jobDetails, setJobDetails] = useState(initState);
 
@@ -116,15 +117,31 @@ const NewJobModel = (props) => {
   //   props.closeModal();
   // }
 
+  // const closeModal = useCallback(() => {
+  //   setJobDetails(initState);
+  //   setLoading(false);
+  //   props.closeModal();
+  // }, [props.closeModal]);
+
   // const closeModalCallback = useCallback(() => {
   //   closeModal();
   // }, [closeModal]);
 
-  const closeModal = useCallback(() => {
+  // const closeModal = useCallback(() => {
+  //   setJobDetails(initState);
+  //   setLoading(false);
+  //   props.closeModal();
+  // }, [props.closeModal]);
+
+  // Destructure the props object outside useCallback
+  const { closeModal } = props;
+
+  // Wrap closeModal in useCallback and refer to the specific prop inside
+  const closeModalCallback = useCallback(() => {
     setJobDetails(initState);
     setLoading(false);
-    props.closeModal();
-  }, [props.closeModal]);
+    closeModal();
+  }, [closeModal]);
 
   useEffect(() => {
     const postJob = async () => {
@@ -146,7 +163,8 @@ const NewJobModel = (props) => {
       } catch (error) {
         console.error('Error posting job:', error);
       } finally {
-        closeModal();
+        // closeModal();
+        closeModalCallback();
         // closeModalCallback();
         // Reset the state variable to indicate that the job posting is complete
         setIsPostingJob(false);
@@ -158,7 +176,7 @@ const NewJobModel = (props) => {
       // Trigger the job posting when isPostingJob is true
       postJob();
     }
-  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModal]); // Dependency array: watch for changes in isPostingJob or jobDetails
+  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModalCallback]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
  
 
