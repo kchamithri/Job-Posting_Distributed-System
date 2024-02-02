@@ -110,6 +110,12 @@ const NewJobModel = (props) => {
 
   const [isPostingJob, setIsPostingJob] = useState(false);
 
+  const closeModal = () =>{
+    setJobDetails(initState);
+    setLoading(false);
+    props.closeModal();
+  }
+
   useEffect(() => {
     const postJob = async () => {
       try {
@@ -133,7 +139,7 @@ const NewJobModel = (props) => {
         closeModal();
         // Reset the state variable to indicate that the job posting is complete
         setIsPostingJob(false);
-        props.onNewJobPosted();
+        // props.onNewJobPosted();
       }
     };
 
@@ -141,13 +147,9 @@ const NewJobModel = (props) => {
       // Trigger the job posting when isPostingJob is true
       postJob();
     }
-  }, [isPostingJob, JOBS_API_URL, jobDetails ]); // Dependency array: watch for changes in isPostingJob or jobDetails
+  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModal ]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
-  const closeModal = () =>{
-    setJobDetails(initState);
-    setLoading(false);
-    props.closeModal();
-  }
+ 
 
   return (
     <Dialog open={props.newJobModal} fullWidth>
