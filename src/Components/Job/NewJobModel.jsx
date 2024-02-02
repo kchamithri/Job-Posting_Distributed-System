@@ -89,49 +89,8 @@ const NewJobModel = (props) => {
   const BASE_URL = 'https://jobsforyou.azurewebsites.net';
    const JOBS_API_URL = BASE_URL + '/addJob';
 
-  // const handlePostJob = async () => {
-  //   try {
-  //     const response = await fetch(JOBS_API_URL, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(jobDetails),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log('Job posted successfully');
-  //     } else {
-  //       console.error('Failed to post job');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error posting job:', error);
-  //   }
-  // };
 
   const [isPostingJob, setIsPostingJob] = useState(false);
-
-  // const closeModal = () =>{
-  //   setJobDetails(initState);
-  //   setLoading(false);
-  //   props.closeModal();
-  // }
-
-  // const closeModal = useCallback(() => {
-  //   setJobDetails(initState);
-  //   setLoading(false);
-  //   props.closeModal();
-  // }, [props.closeModal]);
-
-  // const closeModalCallback = useCallback(() => {
-  //   closeModal();
-  // }, [closeModal]);
-
-  // const closeModal = useCallback(() => {
-  //   setJobDetails(initState);
-  //   setLoading(false);
-  //   props.closeModal();
-  // }, [props.closeModal]);
 
   // Destructure the props object outside useCallback
   const { closeModal } = props;
@@ -165,7 +124,6 @@ const NewJobModel = (props) => {
       } finally {
         // closeModal();
         closeModalCallback();
-        // closeModalCallback();
         // Reset the state variable to indicate that the job posting is complete
         setIsPostingJob(false);
         // props.onNewJobPosted();
