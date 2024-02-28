@@ -17,25 +17,26 @@ function App() {
   const JOBS_API_URL = BASE_URL + "/get-jobs";
   // const JOBS_API_URL = BASE_URL;
 
-  useEffect(() => {
-    fetch(JOBS_API_URL, {
-      method: "GET",
-      content: "application/json",
+ const JOBS_API_URL = BASE_URL + "/get-jobs";
+
+useEffect(() => {
+  fetch(JOBS_API_URL)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setJobs(data.jobs);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("error fetching:", error);
-      });
-  }, [JOBS_API_URL]);
+    .then(data => {
+      setJobs(data);
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error('Error fetching jobs:', error);
+      setLoading(false); // Set loading to false even in case of error
+    });
+}, [JOBS_API_URL]);
+
 
 
   const handleNewJobPosted = () => {
