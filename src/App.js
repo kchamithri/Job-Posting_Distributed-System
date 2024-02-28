@@ -12,10 +12,10 @@ function App() {
 
   const [newJobModal, setNewJobModal] = useState(false);
 
-  const BASE_URL = "https://jobsforyou.azurewebsites.net";
+  const BASE_URL = "https://job-posting-function-app.azurewebsites.net";
 
-  //const JOBS_API_URL = BASE_URL + "/jobs";
-  const JOBS_API_URL = BASE_URL;
+  const JOBS_API_URL = BASE_URL + "/get-jobs";
+  // const JOBS_API_URL = BASE_URL;
 
   useEffect(() => {
     fetch(JOBS_API_URL, {
