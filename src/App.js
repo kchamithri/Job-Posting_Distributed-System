@@ -17,8 +17,6 @@ function App() {
   const JOBS_API_URL = BASE_URL + "/get-jobs";
   // const JOBS_API_URL = BASE_URL;
 
- const JOBS_API_URL = BASE_URL + "/get-jobs";
-
 useEffect(() => {
   fetch(JOBS_API_URL)
     .then(response => {
