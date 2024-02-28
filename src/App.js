@@ -12,30 +12,29 @@ function App() {
 
   const [newJobModal, setNewJobModal] = useState(false);
 
-  const BASE_URL = "https://job-posting-function-app.azurewebsites.net/api";
+  const BASE_URL =
+    "https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api";
 
   const JOBS_API_URL = BASE_URL + "/get-jobs";
   // const JOBS_API_URL = BASE_URL;
 
-useEffect(() => {
-  fetch(JOBS_API_URL)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      setJobs(data);
-      setLoading(false);
-    })
-    .catch(error => {
-      console.error('Error fetching jobs:', error);
-      setLoading(false); // Set loading to false even in case of error
-    });
-}, [JOBS_API_URL]);
-
-
+  useEffect(() => {
+    fetch(JOBS_API_URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setJobs(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+        setLoading(false); // Set loading to false even in case of error
+      });
+  }, [JOBS_API_URL]);
 
   const handleNewJobPosted = () => {
     // Close the modal and trigger a refresh of job data
@@ -59,7 +58,11 @@ useEffect(() => {
   return (
     <ThemeProvider theme={theme}>
       <Header openNewJobModal={() => setNewJobModal(true)} />
-      <NewJobModel closeModal={() => setNewJobModal(false)} newJobModal={newJobModal} onNewJobPosted={handleNewJobPosted}/>
+      <NewJobModel
+        closeModal={() => setNewJobModal(false)}
+        newJobModal={newJobModal}
+        onNewJobPosted={handleNewJobPosted}
+      />
       <Grid container justifyContent="center">
         <Grid item xs={10}>
           <SearchBar />
