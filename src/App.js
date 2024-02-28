@@ -12,7 +12,7 @@ function App() {
 
   const [newJobModal, setNewJobModal] = useState(false);
 
-  const BASE_URL = "https://job-posting-function-app.azurewebsites.net";
+  const BASE_URL = "https://job-posting-function-app.azurewebsites.net/api";
 
   const JOBS_API_URL = BASE_URL + "/get-jobs";
   // const JOBS_API_URL = BASE_URL;
