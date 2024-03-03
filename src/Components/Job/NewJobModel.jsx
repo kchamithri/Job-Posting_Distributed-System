@@ -57,7 +57,7 @@ const NewJobModel = (props) => {
 
   useEffect(() => {
     date = new Date().toISOString();
-  }, [date]);
+  }, []);
 
   const [jobDetails, setJobDetails] = useState(initState);
 
