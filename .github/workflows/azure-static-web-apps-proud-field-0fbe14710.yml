@@ -19,6 +19,22 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: npm install, build, and test
+        run: |
+          npm install -f
+          npm run build --if-present
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: build to code
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
