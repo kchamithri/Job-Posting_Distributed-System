@@ -16,7 +16,6 @@ function App() {
     "https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api";
 
   const JOBS_API_URL = BASE_URL + "/get-jobs";
-  // const JOBS_API_URL = BASE_URL;
 
   useEffect(() => {
     fetch(JOBS_API_URL)

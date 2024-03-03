@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Dialog,
@@ -13,42 +13,43 @@ import {
   makeStyles,
   Button,
   IconButton,
-} from '@material-ui/core';
-import CloseIcon from '@mui/icons-material/Close';
-import { CircularProgress } from '@mui/material';
-import { useCallback } from 'react';
+} from "@material-ui/core";
+import CloseIcon from "@mui/icons-material/Close";
+import { CircularProgress } from "@mui/material";
+import { useCallback } from "react";
 
 const useStyle = makeStyles((theme) => ({
   skillChip: {
     margin: theme.spacing(0.5),
     padding: theme.spacing(0.75),
-    fontSize: '14.5px',
-    borderRadius: '5px',
+    fontSize: "14.5px",
+    borderRadius: "5px",
     fontWeight: 600,
     border: `1px solid ${theme.palette.secondary.main}`,
-    cursor: 'pointer',
+    cursor: "pointer",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.secondary.main,
-      color: '#ffffff',
+      color: "#ffffff",
     },
   },
   included: {
     backgroundColor: theme.palette.secondary.main,
-    color: '#ffffff',
+    color: "#ffffff",
   },
 }));
 
-const initState = { 
-companyName: '',
-companyUrl: '',
-link: '',
-location: '',
-// postedOn: "",
-skills: [],
-title: '',
-type: '',
-description: '',}
+const initState = {
+  companyName: "",
+  companyUrl: "",
+  link: "",
+  location: "",
+  // postedOn: "",
+  skills: [],
+  title: "",
+  type: "",
+  description: "",
+};
 
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
@@ -76,19 +77,19 @@ const NewJobModel = (props) => {
         }));
   const classes = useStyle();
   const skills = [
-    'Javascript',
-    'React js',
-    'Node js',
-    'Vue js',
-    'Firebase',
-    'MongoDB',
-    'SQL',
+    "Javascript",
+    "React js",
+    "Node js",
+    "Vue js",
+    "Firebase",
+    "MongoDB",
+    "SQL",
   ];
   console.log(jobDetails);
 
-  const BASE_URL = 'https://jobsforyou.azurewebsites.net';
-   const JOBS_API_URL = BASE_URL + '/addJob';
-
+  const BASE_URL =
+    "https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api";
+  const JOBS_API_URL = BASE_URL + "/add-job";
 
   const [isPostingJob, setIsPostingJob] = useState(false);
 
@@ -107,20 +108,20 @@ const NewJobModel = (props) => {
       try {
         setLoading(true);
         const response = await fetch(JOBS_API_URL, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(jobDetails),
         });
 
         if (response.ok) {
-          console.log('Job posted successfully');
+          console.log("Job posted successfully");
         } else {
-          console.error('Failed to post job');
+          console.error("Failed to post job");
         }
       } catch (error) {
-        console.error('Error posting job:', error);
+        console.error("Error posting job:", error);
       } finally {
         // closeModal();
         closeModalCallback();
@@ -135,8 +136,6 @@ const NewJobModel = (props) => {
       postJob();
     }
   }, [isPostingJob, JOBS_API_URL, jobDetails, closeModalCallback]); // Dependency array: watch for changes in isPostingJob or jobDetails
-
- 
 
   return (
     <Dialog open={props.newJobModal} fullWidth>
@@ -272,11 +271,10 @@ const NewJobModel = (props) => {
             disabled={loading}
           >
             {loading ? (
-              <CircularProgress color='secondary' size={22} />
-            ):(
+              <CircularProgress color="secondary" size={22} />
+            ) : (
               "Post Job"
-              )}
-            
+            )}
           </Button>
         </Box>
       </DialogActions>
