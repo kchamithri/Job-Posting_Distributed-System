@@ -39,21 +39,25 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const initState = {
-  companyName: "",
-  companyUrl: "",
-  link: "",
-  location: "",
-  // postedOn: "",
-  skills: [],
-  title: "",
-  type: "",
-  description: "",
-};
-
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
+  const date = "";
   // const [newJobModal, setNewJobModal] = useState(false);
+  const initState = {
+    companyName: "",
+    companyUrl: "",
+    link: "",
+    location: "",
+    postedOn: date,
+    skills: [],
+    title: "",
+    type: "",
+    description: "",
+  };
+
+  useEffect(() => {
+    date = new Date().toISOString();
+  }, [date]);
 
   const [jobDetails, setJobDetails] = useState(initState);
 
