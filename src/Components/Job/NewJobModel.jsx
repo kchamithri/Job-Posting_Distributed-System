@@ -96,7 +96,7 @@ const NewJobModel = (props) => {
 
   const BASE_URL =
     "https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api";
-  const JOBS_API_URL = BASE_URL + "/add-job";
+  const JOB_API_URL = BASE_URL + "/add-job";
 
   const [isPostingJob, setIsPostingJob] = useState(false);
 
@@ -114,7 +114,7 @@ const NewJobModel = (props) => {
     const postJob = async () => {
       try {
         setLoading(true);
-        const response = await fetch(JOBS_API_URL, {
+        const response = await fetch(JOB_API_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -125,7 +125,8 @@ const NewJobModel = (props) => {
         if (response.ok) {
           console.log("Job posted successfully");
         } else {
-          console.error("Failed to post job");
+          const errorMessage = await response.text();
+          console.error("Failed to post job:", errorMessage);
         }
       } catch (error) {
         console.error("Error posting job:", error);
@@ -142,7 +143,7 @@ const NewJobModel = (props) => {
       // Trigger the job posting when isPostingJob is true
       postJob();
     }
-  }, [isPostingJob, JOBS_API_URL, jobDetails, closeModalCallback]); // Dependency array: watch for changes in isPostingJob or jobDetails
+  }, [isPostingJob, JOB_API_URL, jobDetails, closeModalCallback]); // Dependency array: watch for changes in isPostingJob or jobDetails
 
   return (
     <Dialog open={props.newJobModal} fullWidth>
