@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Dialog,
@@ -40,21 +40,17 @@ const useStyles = makeStyles((theme) => ({
 
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
-  const dateRef = useRef("");
-  const initState = useMemo(
-    () => ({
-      companyName: "",
-      companyUrl: "",
-      link: "",
-      location: "",
-      postedOn: dateRef.current,
-      skills: [],
-      title: "",
-      type: "",
-      description: "",
-    }),
-    []
-  );
+  const initState = {
+    companyName: "",
+    companyUrl: "",
+    link: "",
+    location: "",
+    postedOn: new Date().toISOString(),
+    skills: [],
+    title: "",
+    type: "",
+    description: "",
+  };
 
   const [jobDetails, setJobDetails] = useState(initState);
   const classes = useStyles();
@@ -96,6 +92,7 @@ const NewJobModel = (props) => {
 
   const postJob = async () => {
     try {
+      console.log(JSON.stringify(jobDetails));
       setLoading(true);
       const response = await fetch(JOB_API_URL, {
         method: "POST",
