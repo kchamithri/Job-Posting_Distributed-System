@@ -131,8 +131,109 @@ const NewJobModel = (props) => {
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          {/* Job details inputs */}
+          <Grid item xs={6}>
+            <FilledInput
+              onChange={handleChange}
+              name="title"
+              value={jobDetails.title}
+              autoComplete="off"
+              placeholder="Job Title*"
+              disableUnderline
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Select
+              onChange={handleChange}
+              name="type"
+              value={jobDetails.type}
+              fullWidth
+              disableUnderline
+              variant="filled"
+            >
+              <MenuItem value="FullTime">Full time</MenuItem>
+              <MenuItem value="PartTime">Part time</MenuItem>
+              <MenuItem value="Contract">Contract</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item xs={6}>
+            <FilledInput
+              onChange={handleChange}
+              name="companyName"
+              value={jobDetails.companyName}
+              autoComplete="off"
+              placeholder="Company Name*"
+              disableUnderline
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FilledInput
+              onChange={handleChange}
+              name="companyUrl"
+              value={jobDetails.companyUrl}
+              autoComplete="off"
+              placeholder="Company URL*"
+              disableUnderline
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Select
+              onChange={handleChange}
+              name="location"
+              value={jobDetails.location}
+              fullWidth
+              disableUnderline
+              variant="filled"
+              // defaultValue="FullTime"
+            >
+              <MenuItem value="Remote">Remote</MenuItem>
+              <MenuItem value="On-Site">On-Site</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item xs={6}>
+            <FilledInput
+              onChange={handleChange}
+              name="link"
+              value={jobDetails.link}
+              placeholder="Job Link*"
+              disableUnderline
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FilledInput
+              onChange={handleChange}
+              name="description"
+              value={jobDetails.description}
+              autoComplete="off"
+              placeholder="Job Description*"
+              disableUnderline
+              fullWidth
+              multiline
+              rows={3}
+            />
+          </Grid>
         </Grid>
+        <Box mt={2}>
+          <Typography>Skills</Typography>
+          <Box display="flex">
+            {skills.map((skill) => {
+              return (
+                <Box
+                  onClick={() => addRemoveSkill(skill)}
+                  className={`${classes.skillChip} ${
+                    jobDetails.skills.includes(skill) && classes.included
+                  }`}
+                  key={skill}
+                >
+                  {skill}
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Box
