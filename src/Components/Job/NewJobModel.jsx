@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Box,
   Dialog,
@@ -41,19 +41,26 @@ const useStyle = makeStyles((theme) => ({
 
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
-
+  const dateRef = useRef("");
   // const [newJobModal, setNewJobModal] = useState(false);
-  const initState = {
-    companyName: "",
-    companyUrl: "",
-    link: "",
-    location: "",
-    postedOn: new Date().toISOString(),
-    skills: [],
-    title: "",
-    type: "",
-    description: "",
-  };
+  const initState = useMemo(
+    () => ({
+      companyName: "",
+      companyUrl: "",
+      link: "",
+      location: "",
+      postedOn: dateRef.current,
+      skills: [],
+      title: "",
+      type: "",
+      description: "",
+    }),
+    []
+  );
+
+  useEffect(() => {
+    dateRef.current = new Date().toISOString();
+  }, []);
 
   const [jobDetails, setJobDetails] = useState(initState);
 
@@ -101,7 +108,7 @@ const NewJobModel = (props) => {
     setJobDetails(initState);
     setLoading(false);
     closeModal();
-  }, [closeModal]);
+  }, [closeModal, initState]);
 
   useEffect(() => {
     const postJob = async () => {
