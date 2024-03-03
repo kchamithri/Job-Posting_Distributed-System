@@ -41,23 +41,19 @@ const useStyle = makeStyles((theme) => ({
 
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
-  const dateRef = useRef("");
+
   // const [newJobModal, setNewJobModal] = useState(false);
   const initState = {
     companyName: "",
     companyUrl: "",
     link: "",
     location: "",
-    postedOn: dateRef.current,
+    postedOn: new Date().toISOString(),
     skills: [],
     title: "",
     type: "",
     description: "",
   };
-
-  useEffect(() => {
-    dateRef.current = new Date().toISOString();
-  }, []);
 
   const [jobDetails, setJobDetails] = useState(initState);
 
@@ -105,7 +101,7 @@ const NewJobModel = (props) => {
     setJobDetails(initState);
     setLoading(false);
     closeModal();
-  }, [closeModal, initState]);
+  }, [closeModal]);
 
   useEffect(() => {
     const postJob = async () => {
