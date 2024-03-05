@@ -28,7 +28,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
         console.error("Error fetching jobs:", error);
         setLoading(false); // Set loading to false even in case of error
       });
-  }, [JOBS_API_URL]);
+  }, [JOBS_API_URL, setJobs, setLoading]);
 
   return (
     <ThemeProvider theme={theme}>
