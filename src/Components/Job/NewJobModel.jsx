@@ -16,6 +16,8 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@mui/icons-material/Close";
 import { CircularProgress } from "@mui/material";
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 
 const useStyles = makeStyles((theme) => ({
   skillChip: {
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
+  const { instance, accounts } = useMsal();
   const initState = {
     companyName: "",
     companyUrl: "",
@@ -94,10 +97,17 @@ const NewJobModel = (props) => {
     try {
       console.log(JSON.stringify(jobDetails));
       setLoading(true);
+
+      const tokenResponse = await instance.acquireTokenSilent({
+        ...loginRequest,
+        account: accounts[0],
+      });
+
       const response = await fetch(JOB_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenResponse.accessToken}`,
         },
         body: JSON.stringify(jobDetails),
       });
