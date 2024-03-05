@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Grid, ThemeProvider } from "@mui/material";
 import theme from "../../theme/theme";
 import Header from "../Header";
 import SearchBar from "../SearchBar";
 import JobCard from "../Job/JobCard";
-import NewJobModel from "../Job/NewJobModel";
 import { Box, CircularProgress } from "@material-ui/core";
 
 function JobList({ jobs, setJobs, loading, setLoading }) {

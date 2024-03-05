@@ -38,7 +38,7 @@ const ProfileContent = () => {
 
         setRoles(response.idTokenClaims.roles);
       });
-  }, []);
+  }, [accounts, instance]);
 
   useEffect(() => {
     console.log(roles);
