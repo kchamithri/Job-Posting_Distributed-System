@@ -114,6 +114,9 @@ const NewJobModel = (props) => {
 
       if (response.ok) {
         console.log("Job posted successfully");
+
+        // Redirect to homepage
+        window.location.href = "/"; 
       } else {
         const errorMessage = await response.text();
         console.error("Failed to post job:", errorMessage);

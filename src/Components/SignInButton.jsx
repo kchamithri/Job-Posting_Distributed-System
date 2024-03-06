@@ -1,7 +1,7 @@
-import React from "react";
-import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../authConfig";
-import { Button } from "@material-ui/core";
+import React from 'react';
+import { useMsal } from '@azure/msal-react';
+import { loginRequest } from '../authConfig';
+import { Button } from '@material-ui/core';
 
 /**
  * Renders a drop down button with child buttons for logging in with a popup or redirect
@@ -33,7 +33,11 @@ export const SignInButton = () => {
         </Dropdown.Item>
       </DropdownButton> */}
 
-      <Button variant="contained" onClick={() => handleLogin()}>
+      <Button
+        variant="contained"
+        style={{ backgroundColor: 'black', color: 'white', fontWeight: 'bold' }}
+        onClick={() => handleLogin()}
+      >
         Sign In
       </Button>
     </>

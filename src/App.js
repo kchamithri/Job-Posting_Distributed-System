@@ -1,20 +1,20 @@
-import { PageLayout } from "../src/Components/PageLayout";
-import { loginRequest } from "./authConfig";
-import { callMsGraph } from "./graph";
-import { ProfileData } from "../src/Components/ProfileData";
+import { PageLayout } from '../src/Components/PageLayout';
+import { loginRequest } from './authConfig';
+import { callMsGraph } from './graph';
+import { ProfileData } from '../src/Components/ProfileData';
 
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
   useMsal,
-} from "@azure/msal-react";
+} from '@azure/msal-react';
 
-import "./App.css";
+import './App.css';
 
-import { Button } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import JobList from "./Components/Job/JobList";
-import NewJobModel from "./Components/Job/NewJobModel";
+import { Button } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import JobList from './Components/Job/JobList';
+import NewJobModel from './Components/Job/NewJobModel';
 
 /**
  * Renders information about the signed-in user or a button to retrieve data about the user
@@ -46,7 +46,10 @@ const ProfileContent = () => {
 
   return (
     <>
-      <h5 className="card-title">Welcome {accounts ? accounts[0].name : ""}</h5>
+      <h5 className="card-title">
+        <b>Welcome</b> <br />
+        {accounts ? accounts[0].name : ''}
+      </h5>
       <NewJobModel
         closeModal={() => setNewJobModal(false)}
         newJobModal={newJobModal}
@@ -55,18 +58,28 @@ const ProfileContent = () => {
       {graphData ? (
         <>
           <ProfileData graphData={graphData} />
-          {!roles || (roles.length === 1 && roles[0] === "Job.Write") ? (
+          {!roles || (roles.length === 1 && roles[0] === 'Job.Write') ? (
             <Button
               onClick={() => setNewJobModal(true)}
               variant="contained"
-              disableElevation
+              disableFocusRipple
+              color="success"
+              sx={{
+                backgroundColor: 'pink',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                transition: 'color 0.3s ease',
+                '&:hover': {
+                  color: '#45a049',
+                },
+              }}
             >
               Post a Job
             </Button>
           ) : null}
         </>
       ) : (
-        ""
+        ''
       )}
     </>
   );
