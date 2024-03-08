@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Button, Select, MenuItem, makeStyles } from "@material-ui/core";
 
 const useStyle = makeStyles({
@@ -15,22 +14,24 @@ const useStyle = makeStyles({
   },
 });
 
-const SearchBar = (props) => {
+const SearchBar = ({onclick, handleChange, jobSearch}) => {
+  
   const classes = useStyle();
   return (
     <Box p={2} mt={-5} mb={2} className={classes.wrapper}>
-      <Select disableUnderline variant="filled" defaultValue="FullTime">
+      <Select onChange={handleChange} value={jobSearch.type} name="type" disableUnderline variant="filled">
         <MenuItem value="FullTime">Full time</MenuItem>
         <MenuItem value="PartTime">Part time</MenuItem>
         <MenuItem value="Contract">Contract</MenuItem>
       </Select>
 
-      <Select disableUnderline variant="filled" defaultValue="Remote">
+      <Select onChange={handleChange} value={jobSearch.location} name="location" disableUnderline variant="filled">
         <MenuItem value="Remote">Remote</MenuItem>
         <MenuItem value="In-Office">In-Office</MenuItem>
+       
       </Select>
 
-      <Button variant="contained" color="primary" disableElevation>
+      <Button variant="contained" color="primary" disableElevation onClick={onclick}>
         Search
       </Button>
     </Box>
