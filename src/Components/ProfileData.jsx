@@ -98,48 +98,42 @@
 //   );
 // };
 
-import React from 'react';
+import React from "react";
 import {
   Box,
   Card,
   CardContent,
   Divider,
-  Grid,
-  MenuItem,
-  Select,
   Typography,
-  Button,
-  IconButton,
   Avatar,
   Stack,
-} from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+} from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
-const getOrDefault = (data, key, defaultValue = '') => {
+const getOrDefault = (data, key, defaultValue = "") => {
   return data && data[key] ? data[key] : defaultValue;
 };
 
 const theme = createTheme();
 
-export const ProfileData = ({ graphData }) => {
-  const firstName = getOrDefault(graphData, 'givenName');
-  const lastName = getOrDefault(graphData, 'surname');
-  const email = getOrDefault(graphData, 'userPrincipalName');
-  const id = getOrDefault(graphData, 'id');
+const ProfileData = ({ graphData }) => {
+  const firstName = getOrDefault(graphData, "givenName");
+  const lastName = getOrDefault(graphData, "surname");
+  const email = getOrDefault(graphData, "userPrincipalName");
+  const id = getOrDefault(graphData, "id");
 
   return (
     <Card
       theme={theme}
       sx={{
         maxWidth: 600,
-        margin: 'auto',
+        margin: "auto",
         padding: 3,
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         marginBottom: 5,
-        
       }}
     >
       <Avatar
@@ -147,9 +141,9 @@ export const ProfileData = ({ graphData }) => {
           width: 100,
           height: 100,
           marginBottom: 2,
-          fontSize: '4rem',
-          bgcolor: 'secondary.main',
-          color: 'white',
+          fontSize: "4rem",
+          bgcolor: "secondary.main",
+          color: "white",
         }}
       >
         {firstName.charAt(0).toUpperCase()}
@@ -159,12 +153,12 @@ export const ProfileData = ({ graphData }) => {
         <Box
           sx={{
             marginBottom: 2,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h5" component="h2" sx={{ fontWeight: "bold" }}>
             {firstName} {lastName}
           </Typography>
         </Box>
@@ -175,13 +169,13 @@ export const ProfileData = ({ graphData }) => {
           alignItems="center"
           sx={{ marginBottom: 2 }}
         >
-          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
             Email:
           </Typography>
           <Typography variant="body2">{email}</Typography>
         </Stack>
         <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
             ID:
           </Typography>
           <Typography variant="body2">{id}</Typography>
@@ -190,3 +184,5 @@ export const ProfileData = ({ graphData }) => {
     </Card>
   );
 };
+
+export default ProfileData;

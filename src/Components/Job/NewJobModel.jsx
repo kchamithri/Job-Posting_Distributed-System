@@ -13,11 +13,13 @@ import {
   makeStyles,
   Button,
   IconButton,
+  InputLabel,
 } from "@material-ui/core";
 import CloseIcon from "@mui/icons-material/Close";
 import { CircularProgress } from "@mui/material";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../../authConfig";
+import { useNavigate } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   skillChip: {
@@ -43,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
 const NewJobModel = (props) => {
   const [loading, setLoading] = useState(false);
   const { instance, accounts } = useMsal();
+  const navigateTo = useNavigate();
+
   const initState = {
     companyName: "",
     companyUrl: "",
@@ -61,7 +65,7 @@ const NewJobModel = (props) => {
     "Javascript",
     "React js",
     "Node js",
-    "Vue js",
+    ".NET",
     "Firebase",
     "MongoDB",
     "SQL",
@@ -114,9 +118,6 @@ const NewJobModel = (props) => {
 
       if (response.ok) {
         console.log("Job posted successfully");
-
-        // Redirect to homepage
-        window.location.href = "/"; 
       } else {
         const errorMessage = await response.text();
         console.error("Failed to post job:", errorMessage);
@@ -126,6 +127,7 @@ const NewJobModel = (props) => {
     } finally {
       closeModalCallback();
       setLoading(false);
+      navigateTo("/");
     }
   };
 
@@ -157,6 +159,7 @@ const NewJobModel = (props) => {
               onChange={handleChange}
               name="type"
               value={jobDetails.type}
+              label="Type"
               fullWidth
               disableUnderline
               variant="filled"
