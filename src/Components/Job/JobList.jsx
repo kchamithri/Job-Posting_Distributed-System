@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, ThemeProvider } from "@mui/material";
 import theme from "../../theme/theme";
 import Header from "../Header";
 import SearchBar from "../SearchBar";
 import JobCard from "../Job/JobCard";
 import { Box, CircularProgress } from "@material-ui/core";
+import ViewJobModal from "./VIewJobModal";
 
 function JobList({ jobs, setJobs, loading, setLoading }) {
   const BASE_URL =
     "https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api";
 
   const JOBS_API_URL = BASE_URL + "/get-jobs";
+
+  const [viewJob, setViewJob] = useState({});
+
 
   useEffect(() => {
     fetch(JOBS_API_URL)
@@ -33,7 +37,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-
+      <ViewJobModal job={viewJob} closeModal={()=>setViewJob({})}/>
       <Grid container justifyContent="center">
         <Grid item xs={10}>
           <SearchBar />
@@ -43,7 +47,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
             </Box>
           ) : (
             jobs.map((data) => {
-              return <JobCard key={data.id} {...data} />;
+              return <JobCard open={()=>setViewJob(data)} key={data.id} {...data} />;
             })
           )}
         </Grid>
