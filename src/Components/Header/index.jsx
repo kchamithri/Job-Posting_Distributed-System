@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
-const Header = (props) => {
+const Header = () => {
   return (
     <Box p={10} bgcolor="secondary.main" color="white">
       <Grid container>
@@ -11,9 +11,6 @@ const Header = (props) => {
             justifyContent="space-between"
           >
             <Typography variant="h4">Open Job Listing</Typography>
-            <Button onClick={props.openNewJobModal} variant="contained" disableElevation>
-              Post a Job
-            </Button>
           </Box>
         </Grid>
       </Grid>

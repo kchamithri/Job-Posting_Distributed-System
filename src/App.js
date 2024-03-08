@@ -1,82 +1,108 @@
-import React, { useEffect, useState } from "react";
-import { Grid, ThemeProvider } from "@mui/material";
-import theme from "./theme/theme";
-import Header from "./Components/Header";
-import SearchBar from "./Components/SearchBar";
-import JobCard from "./Components/Job/JobCard";
+import { PageLayout } from "../src/Components/PageLayout";
+import { loginRequest } from "./authConfig";
+import { callMsGraph } from "./graph";
+import { ProfileData } from "../src/Components/ProfileData";
+
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+  useMsal,
+} from "@azure/msal-react";
+
+import "./App.css";
+
+import { Button } from "@material-ui/core";
+import { useEffect, useState } from "react";
+import JobList from "./Components/Job/JobList";
 import NewJobModel from "./Components/Job/NewJobModel";
-import { Box, CircularProgress } from "@material-ui/core";
-function App() {
+
+/**
+ * Renders information about the signed-in user or a button to retrieve data about the user
+ */
+const ProfileContent = () => {
+  const { instance, accounts } = useMsal();
+  const [graphData, setGraphData] = useState(null);
+  const [newJobModal, setNewJobModal] = useState(false);
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    instance
+      .acquireTokenSilent({
+        ...loginRequest,
+        account: accounts[0],
+      })
+      .then((response) => {
+        callMsGraph(response.accessToken).then((response) =>
+          setGraphData(response)
+        );
+
+        setRoles(response.idTokenClaims.roles);
+      });
+  }, [accounts, instance]);
+
+  useEffect(() => {
+    console.log(roles);
+  }, [roles]);
+
+  return (
+    <>
+      <h5 className="card-title">Welcome {accounts ? accounts[0].name : ""}</h5>
+      <NewJobModel
+        closeModal={() => setNewJobModal(false)}
+        newJobModal={newJobModal}
+      />
+
+      {graphData ? (
+        <>
+          <ProfileData graphData={graphData} />
+          {!roles || (roles.length === 1 && roles[0] === "Job.Write") ? (
+            <Button
+              onClick={() => setNewJobModal(true)}
+              variant="contained"
+              disableElevation
+            >
+              Post a Job
+            </Button>
+          ) : null}
+        </>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
+
+/**
+ * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
+ */
+const MainContent = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [newJobModal, setNewJobModal] = useState(false);
-
-  const BASE_URL = "https://jobsforyou.azurewebsites.net";
-
-  //const JOBS_API_URL = BASE_URL + "/jobs";
-  const JOBS_API_URL = BASE_URL;
-
-  useEffect(() => {
-    fetch(JOBS_API_URL, {
-      method: "GET",
-      content: "application/json",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setJobs(data.jobs);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("error fetching:", error);
-      });
-  }, [JOBS_API_URL]);
-
-
-  const handleNewJobPosted = () => {
-    // Close the modal and trigger a refresh of job data
-    setNewJobModal(false);
-    // You can also set loading to true here if you want to show a loading spinner during data refresh
-    // setLoading(true);
-    // Fetch updated job data after posting a new job
-    fetch(JOBS_API_URL)
-      .then((response) => response.json())
-      .then((data) => {
-        setJobs(data.jobs);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("error fetching:", error);
-        // Handle error if needed
-        setLoading(false);
-      });
-  };
-
   return (
-    <ThemeProvider theme={theme}>
-      <Header openNewJobModal={() => setNewJobModal(true)} />
-      <NewJobModel closeModal={() => setNewJobModal(false)} newJobModal={newJobModal} onNewJobPosted={handleNewJobPosted}/>
-      <Grid container justifyContent="center">
-        <Grid item xs={10}>
-          <SearchBar />
-          {loading ? (
-            <Box display="flex" justifyContent="center">
-              <CircularProgress />
-            </Box>
-          ) : (
-            jobs.map((data) => {
-              return <JobCard key={data.id} {...data} />;
-            })
-          )}
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+    <div className="App">
+      <AuthenticatedTemplate>
+        <ProfileContent />
+      </AuthenticatedTemplate>
+
+      <UnauthenticatedTemplate>
+        <JobList
+          jobs={jobs}
+          setJobs={setJobs}
+          loading={loading}
+          setLoading={setLoading}
+        />
+      </UnauthenticatedTemplate>
+    </div>
+  );
+};
+
+export default function App() {
+  return (
+    <PageLayout>
+      <center>
+        <MainContent />
+      </center>
+    </PageLayout>
   );
 }
-
-export default App;
