@@ -15,6 +15,11 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
 
   const [viewJob, setViewJob] = useState({});
 
+  const [jobSearch, setJobSearch]= useState({
+    type: "Full time",
+    location: "Remote",
+  })
+
 
   useEffect(() => {
     fetch(JOBS_API_URL)
@@ -26,6 +31,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
       })
       .then((data) => {
         setJobs(data);
+        console.log(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -34,13 +40,39 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
       });
   }, [JOBS_API_URL, setJobs, setLoading]);
 
+  const handleChange = (e) => {
+    e.persist();
+    setJobSearch((oldState) => ({
+      ...oldState,
+      [e.target.name]: e.target.value,
+    }));
+  }; 
+
+  const jobSearchhandler = (type, location) => {
+    console.log("searching")
+    //filter jobs based on type and location from  fetch jobs_api_url
+    console.log("searching for jobs");
+    fetch(JOBS_API_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        const filteredJobs = data.filter((job) =>
+          job.type.toLowerCase().includes(type.toLowerCase()) 
+          && job.location.toLowerCase().includes(location.toLowerCase())
+        );
+        setJobs(filteredJobs);
+      })
+      .catch((error) => {
+        console.log("error fetching:", error);
+      });
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
       <ViewJobModal job={viewJob} closeModal={()=>setViewJob({})}/>
       <Grid container justifyContent="center">
         <Grid item xs={10}>
-          <SearchBar />
+        <SearchBar onclick={()=>jobSearchhandler(jobSearch.type, jobSearch.location)} handleChange={handleChange} jobSearch={jobSearch}/>
           {loading ? (
             <Box display="flex" justifyContent="center">
               <CircularProgress />
