@@ -1,9 +1,6 @@
 import { PageLayout } from "../src/Components/PageLayout";
 
-import {
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-} from "@azure/msal-react";
+import { AuthenticatedTemplate } from "@azure/msal-react";
 
 import "./App.css";
 import { useState } from "react";

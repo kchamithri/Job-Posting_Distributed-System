@@ -5,9 +5,6 @@ import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import NewJobModel from "../Components/Job/NewJobModel";
 import ProfileData from "../Components/ProfileData";
-import { createTheme } from "@mui/material/styles";
-
-const theme = createTheme();
 /**
  * Renders information about the signed-in user or a button to retrieve data about the user
  */

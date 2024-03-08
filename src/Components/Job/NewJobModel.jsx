@@ -13,7 +13,6 @@ import {
   makeStyles,
   Button,
   IconButton,
-  InputLabel,
 } from "@material-ui/core";
 import CloseIcon from "@mui/icons-material/Close";
 import { CircularProgress } from "@mui/material";
