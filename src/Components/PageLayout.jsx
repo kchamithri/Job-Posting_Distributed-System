@@ -30,23 +30,24 @@ export const PageLayout = (props) => {
         <a className="navbar-brand" href="/" style={{ marginLeft: "20px" }}>
           Job Posting Platform
         </a>
-        {currentURL !== "http://localhost:3000/error" && (
-          <div
-            className="collapse navbar-collapse justify-content-end "
-            style={{ marginRight: "20px" }}
-          >
-            {isAuthenticated ? (
-              <>
-                <Button onClick={() => navigateTo("/profile")}>
-                  <AccountCircleIcon sx={{ fontSize: 32 }} />
-                </Button>
-                <SignOutButton />
-              </>
-            ) : (
-              <SignInButton />
-            )}
-          </div>
-        )}
+        {currentURL !== "http://localhost:3000/error" &&
+          currentURL !== "https://job-posting-fe.azurewebsites.net/error" && (
+            <div
+              className="collapse navbar-collapse justify-content-end "
+              style={{ marginRight: "20px" }}
+            >
+              {isAuthenticated ? (
+                <>
+                  <Button onClick={() => navigateTo("/profile")}>
+                    <AccountCircleIcon sx={{ fontSize: 32 }} />
+                  </Button>
+                  <SignOutButton />
+                </>
+              ) : (
+                <SignInButton />
+              )}
+            </div>
+          )}
       </Navbar>
       <br />
       {props.children}
