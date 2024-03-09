@@ -7,8 +7,8 @@ import JobCard from "../Job/JobCard";
 import { Box, CircularProgress } from "@material-ui/core";
 import ViewJobModal from "./VIewJobModal";
 
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function JobList({ jobs, setJobs, loading, setLoading }) {
   const BASE_URL =
@@ -17,6 +17,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
   const JOBS_API_URL = BASE_URL + "/get-jobs";
 
   const [viewJob, setViewJob] = useState({});
+  const navigateTo = useNavigate();
 
   const [jobSearch, setJobSearch] = useState({
     type: "Full time",
@@ -47,9 +48,6 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
-        } else {
-          toast.error("Server down. Please try again later.");
-          throw new Error("Network error");
         }
       })
       .then((data) => {
@@ -57,6 +55,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
         setLoading(false);
       })
       .catch((error) => {
+        navigateTo("/error");
         console.error("Error fetching jobs:", error);
         setLoading(false); // Set loading to false even in case of error
       });
@@ -93,7 +92,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
     <ThemeProvider theme={theme}>
       <Header />
       <ViewJobModal job={viewJob} closeModal={() => setViewJob({})} />
-      <ToastContainer />
+
       <Grid container justifyContent="center">
         <Grid item xs={10}>
           <SearchBar

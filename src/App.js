@@ -7,6 +7,7 @@ import { useState } from "react";
 import JobList from "./Components/Job/JobList";
 import ProfileContent from "./Components/ProfileContent";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Error404 } from "./Components/Error404";
 
 export default function App() {
   const [jobs, setJobs] = useState([]);
@@ -37,6 +38,7 @@ export default function App() {
                   </AuthenticatedTemplate>
                 }
               />
+              <Route path="/error" element={<Error404 />} />
             </Routes>
 
             {/* <UnauthenticatedTemplate>

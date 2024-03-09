@@ -21,29 +21,32 @@ export const PageLayout = (props) => {
   const isAuthenticated = useIsAuthenticated();
   const navigateTo = useNavigate();
 
+  const currentURL = window.location.href;
+  console.log("Current URL:", currentURL);
+
   return (
     <>
       <Navbar bg="primary" variant="dark" className="navbarStyle">
         <a className="navbar-brand" href="/" style={{ marginLeft: "20px" }}>
           Job Posting Platform
         </a>
-        <div
-          className="collapse navbar-collapse justify-content-end "
-          style={{ marginRight: "20px" }}
-        >
-          {isAuthenticated ? (
-            <>
-              <Button onClick={() => navigateTo("/profile")}>
-                <AccountCircleIcon sx={{ fontSize: 32 }} />
-              </Button>
-
-              {/* </a> */}
-              <SignOutButton />
-            </>
-          ) : (
-            <SignInButton />
-          )}
-        </div>
+        {currentURL !== "http://localhost:3000/error" && (
+          <div
+            className="collapse navbar-collapse justify-content-end "
+            style={{ marginRight: "20px" }}
+          >
+            {isAuthenticated ? (
+              <>
+                <Button onClick={() => navigateTo("/profile")}>
+                  <AccountCircleIcon sx={{ fontSize: 32 }} />
+                </Button>
+                <SignOutButton />
+              </>
+            ) : (
+              <SignInButton />
+            )}
+          </div>
+        )}
       </Navbar>
       <br />
       {props.children}
