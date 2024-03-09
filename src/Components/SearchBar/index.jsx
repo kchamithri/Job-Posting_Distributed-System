@@ -20,14 +20,14 @@ const SearchBar = ({onclick, handleChange, jobSearch}) => {
   return (
     <Box p={2} mt={-5} mb={2} className={classes.wrapper}>
       <Select onChange={handleChange} value={jobSearch.type} name="type" disableUnderline variant="filled">
-        <MenuItem value="FullTime">Full time</MenuItem>
-        <MenuItem value="PartTime">Part time</MenuItem>
+        <MenuItem value="Full time">Full time</MenuItem>
+        <MenuItem value="Part time">Part time</MenuItem>
         <MenuItem value="Contract">Contract</MenuItem>
       </Select>
 
       <Select onChange={handleChange} value={jobSearch.location} name="location" disableUnderline variant="filled">
         <MenuItem value="Remote">Remote</MenuItem>
-        <MenuItem value="In-Office">In-Office</MenuItem>
+        <MenuItem value="On-Site">On-Site</MenuItem>
        
       </Select>
 
