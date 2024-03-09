@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, ThemeProvider } from '@mui/material';
-import theme from '../../theme/theme';
-import Header from '../Header';
-import SearchBar from '../SearchBar';
-import JobCard from '../Job/JobCard';
-import { Box, CircularProgress } from '@material-ui/core';
-import ViewJobModal from './VIewJobModal';
+import React, { useEffect, useState } from "react";
+import { Grid, ThemeProvider } from "@mui/material";
+import theme from "../../theme/theme";
+import Header from "../Header";
+import SearchBar from "../SearchBar";
+import JobCard from "../Job/JobCard";
+import { Box, CircularProgress } from "@material-ui/core";
+import ViewJobModal from "./VIewJobModal";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function JobList({ jobs, setJobs, loading, setLoading }) {
   const BASE_URL =
-    'https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api';
+    "https://job-posting-app-front-door-hyaufmbbe7hug4dk.z02.azurefd.net/api";
 
-  const JOBS_API_URL = BASE_URL + '/get-jobs';
+  const JOBS_API_URL = BASE_URL + "/get-jobs";
 
   const [viewJob, setViewJob] = useState({});
 
   const [jobSearch, setJobSearch] = useState({
-    type: 'Full time',
-    location: 'Remote',
+    type: "Full time",
+    location: "Remote",
   });
 
   // useEffect(() => {
@@ -46,13 +46,9 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
     fetch(JOBS_API_URL)
       .then((response) => {
         if (response.status === 200) {
-          toast.success("Success");
           return response.json();
-        } else if (response.status === 403) {
-          toast.error("Server down. Please try again later.");
-          throw new Error("Server down");
         } else {
-          toast.error("Network error. Please try again.");
+          toast.error("Server down. Please try again later.");
           throw new Error("Network error");
         }
       })
@@ -75,9 +71,9 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
   };
 
   const jobSearchhandler = (type, location) => {
-    console.log('searching');
+    console.log("searching");
     //filter jobs based on type and location from  fetch jobs_api_url
-    console.log('searching for jobs');
+    console.log("searching for jobs");
     fetch(JOBS_API_URL)
       .then((response) => response.json())
       .then((data) => {
@@ -89,7 +85,7 @@ function JobList({ jobs, setJobs, loading, setLoading }) {
         setJobs(filteredJobs);
       })
       .catch((error) => {
-        console.log('error fetching:', error);
+        console.log("error fetching:", error);
       });
   };
 
